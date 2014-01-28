@@ -54,16 +54,17 @@ host this yourself. -->
 </script>
 <!-- The Media Player Library - use our URL, don't attempt to host this yourself
 -->
-<script type="text/javascript" 
+<script type="text/javascript"
     src="//www.gstatic.com/cast/sdk/libs/mediaplayer/0.3.0/media_player.js">
 </script>
 
 <script type="text/javascript">
 window.onload = function() {
-// Turn on debugging so that you can see what is going on.  Please turn this off
-// on your production receivers.  Especially if there may be any personally
-// identifiable information in the log.
-  cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+// If you set ?Debug=true in the URL, such as a different App ID in the
+// developer console, include debugging information.
+  if (window.location.href.indexOf('Debug=true') != -1) {
+    cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG);
+  }
 
   var mediaElement = document.getElementById('vid');
 
@@ -93,7 +94,9 @@ window.onload = function() {
         {'mediaElement':mediaElement, 'url':url});
       var ext = url.substring(url.lastIndexOf('.'), url.length);
       var initStart = event.data['media']['currentTime'] || 0;
+      var autoplay = event.data['autoplay'] || true;
       var protocol = null;
+      media.Element.autoplay = autoplay;  // Make sure autoplay get's set
       if (url.lastIndexOf('.m3u8') >= 0) {
 // HTTP Live Streaming
         protocol = cast.player.api.CreateHlsStreamingProtocol(host);
