@@ -96,7 +96,7 @@ window.onload = function() {
       var initStart = event.data['media']['currentTime'] || 0;
       var autoplay = event.data['autoplay'] || true;
       var protocol = null;
-      media.Element.autoplay = autoplay;  // Make sure autoplay get's set
+      mediaElement.autoplay = autoplay;  // Make sure autoplay get's set
       if (url.lastIndexOf('.m3u8') >= 0) {
 // HTTP Live Streaming
         protocol = cast.player.api.CreateHlsStreamingProtocol(host);
